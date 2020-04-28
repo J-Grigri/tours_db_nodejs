@@ -1,6 +1,6 @@
 User can perform the following actions regarding to his account:
 [X] Create new account;
-[] Update profile.
+[X] Update profile.
 
 Authentication:
 [X] User can login to account;
