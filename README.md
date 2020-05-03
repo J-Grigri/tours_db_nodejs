@@ -9,10 +9,11 @@ Authentication:
 features below which require user authentication.
 Tours:
 [X] User can see all tours;
+[X] See all tours by user (by id)
 [X] User should have an option to see only tours which he created;
-[] Search tour by ID
+[X] Find tour by ID
 [X] User can create new tours (member only);
-[] User can update tours information (only tours that belong to the user);
+[X] User can update tours information (only tours that belong to the user);
 [X] User can delete tours (only tours that belong to the user).
 
 Reviews:

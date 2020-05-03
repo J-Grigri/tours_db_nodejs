@@ -59,7 +59,7 @@ tourSchema.virtual('reviews',{
     count: true
 });
 
-//modify which fields should
+//modify which fields should be shown
 tourSchema.pre(/^find/, function (next) {
     this
         .populate("organizer", "-email -__v -tokens -createdAt -updatedAt -password ")//specify which fields to hide. same as below
