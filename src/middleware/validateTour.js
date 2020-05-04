@@ -12,3 +12,9 @@ async function validateTour(req, res, next) {
    }
 }
 module.exports = validateTour
+
+// module.exports = async (req, res, next) => {
+//     if (!req.params.tid || !await Tour.exists({ _id: req.params.tid }))
+//         return res.status(404).json({ status: "Fail", message: "Tour not found" });
+//     next()
+// }

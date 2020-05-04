@@ -24,7 +24,7 @@ exports.editTour = async function (req,res){
     }
 }
 
-//list all tours 
+//list all tours - GIVES ERROR
 exports.readTours = async function (req, res) {
     try {
         const tours = await Tour.find()
@@ -36,13 +36,11 @@ exports.readTours = async function (req, res) {
 };
 //Delete a tour
 exports.deleteTour = async function (req, res){
-    console.log("user id", req.user._id)
-    console.log("magic", req.headers.authorization)
+    
     try {
         await Tour.findOneAndDelete(req.params.id)
         return res.status(204).json({ status: "Deleted", data: null })
     } catch (err) {
-        console.log(err)
         return res.status(400).json({status:"Failed", message:err.message})
     }
 }
@@ -75,7 +73,8 @@ exports.searchMyTours = async function (req, res) {
         res.status(200).json({ status: "Success", data: tours })
     } catch (err) {
         console.log(err)
-        res.status(500).json({ status: "Fail", error: err.message })
+        res.status(500).json({ status: "Failzz", error: err.message })
     }
 }
+
 
