@@ -1,7 +1,7 @@
 const Tour = require('../models/tour');
 
 async function validateTour(req, res, next) {
-   const tourId = req.params.id;
+   const tourId = req.params.tid;
    try {
        const tour = await Tour.findById(tourId);
        if(!tour) return res.status(404).json({status:"fail", error:err.message})
