@@ -51,11 +51,18 @@ userSchema.methods.toJSON = function () {
 const saltRounds = 10;//hash algorythm complexity
 
 //encrypt password before storing it
-userSchema.pre("save", async function (next){
+userSchema.pre("save", async function (next){ //this here = doc
     //make sure that password field is modified (or created). If not, skip
     if (!this.isModified("password")) return next();
     //hash the password
     this.password = await bcrypt.hash(this.password, saltRounds);
+    next()
+});
+
+userSchema.pre("findOneAndUpdate", async function (next) { //this here = query
+    if (!this._update.password) return next;
+    //hash the password
+    this._update.password = await bcrypt.hash(this._update.password, saltRounds);
     next()
 });
 
@@ -89,7 +96,7 @@ userSchema.methods.generateToken = async function(){
 userSchema.virtual('tours', {
     ref: "Tour",
     localField: "_id",
-    foreignField: "organizer",//where User appears in Tour
+    foreignField: "user",//where User appears in Tour
     // count: true
 });
 

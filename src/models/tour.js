@@ -8,17 +8,25 @@ const tourSchema = new mongoose.Schema({
         required: [true, "User must have a name"],
         trim: true,
         unique: true
-
     },
     description: {
         type: String,
         minLength: 10,
     },
     //single object
-    organizer: {
+    user: {
         type: mongoose.Schema.ObjectId,
         ref: "User",
-        require: [true, "Tour must have an organizer"]
+        require: [true, "Tour must have an user"]
+    },
+    duration: {
+        type: Number,
+        required: [true, "Tour must have a duration"],
+    },
+    price: {
+        type: Number,
+        required: [true, "Tour must have a price"],
+        min: 0
     },
     //Array of ID's / chinpmld referencing:
     guides: [
@@ -27,6 +35,17 @@ const tourSchema = new mongoose.Schema({
             ref: "User"
         }
     ],
+    ratingAverage: {
+        type: Number,
+        default: 0,
+        min: [0, "Rating must be above 0"],
+        max: [5, "Rating must be below 5.0"],
+        set: value => Math.round(value * 10) / 10
+    },
+    ratingQuantity: {
+        type: Number,
+        default: 0
+    },
     categories: [
         {
             type: mongoose.Schema.ObjectId,
@@ -51,7 +70,7 @@ tourSchema.pre("save", async function (next) {
     next();
 })
 
-//create temporary or virtual field
+//create temporary or virtual field which does not not hold data in db
 tourSchema.virtual('reviews',{
     ref:"Review",
     localField:"_id",
@@ -62,7 +81,7 @@ tourSchema.virtual('reviews',{
 //modify which fields should be shown
 tourSchema.pre(/^find/, function (next) {
     this
-        .populate("organizer", "-email -__v -tokens -createdAt -updatedAt -password ")//specify which fields to hide. same as below
+        .populate("user", "-email -__v -tokens -createdAt -updatedAt -password ")//specify which fields to hide. same as below
         .populate("guides", "_id name")
         .populate("categories", "_id country")
     next();

@@ -9,7 +9,7 @@ const validateTour = require("../middleware/validateTour")
 router
     .route("/:id")
     .get(auth, searchById)//single tour
-    .put(auth, validateTour, editTour)
+    .patch(auth, validateTour, editTour)
     .delete(auth, deleteTour)
 
 router

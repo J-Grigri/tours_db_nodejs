@@ -5,6 +5,7 @@ const express = require("express")
 const app = express();
 const router = express.Router();
 
+//database connection
 mongoose.connect(process.env.DB_LOCAL, {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -12,11 +13,11 @@ mongoose.connect(process.env.DB_LOCAL, {
     useUnifiedTopology: true
 }).then(() => console.log("successfully connected to database")).catch(err => console.log(err, ))
 
-app.use(bodyParser.urlencoded({ extended: false })); app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json());
-app.use(router);
 
-app.get("/", (req, res) => { res.status(200).json({ status: "ok", data: [] }) })
+
+// app.get("/", (req, res) => { res.status(200).json({ status: "ok", data: [] }) })
 
 //Routers
 const userRouter = require("./src/routers/userRouter")
@@ -25,6 +26,7 @@ const reviewRouter = require("./src/routers/reviewRouter")
 const authRouter = require("./src/routers/authRouter")
 const categoryRouter = require("./src/routers/categoryRouter")
 
+app.use(router);
 router.use("/users", userRouter)
 router.use("/tours", tourRouter)
 router.use("/tours/:tid/reviews", reviewRouter)
